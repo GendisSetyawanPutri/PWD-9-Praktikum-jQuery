@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Praktikum jQuery</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            background: #6ec6ff;
+            color: #222;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            background: #e52521;
+            top: 70px;
+            left: 30px;
+            z-index: -1;
+
+            box-shadow:
+                30px 0 #e52521,
+                60px 0 #e52521,
+
+                -30px 30px #e52521,
+                0 30px #fff,
+                30px 30px #e52521,
+                60px 30px #fff,
+                90px 30px #e52521,
+
+                0 60px #fff,
+                30px 60px #fff,
+                60px 60px #fff,
+
+                30px 90px #f7c928;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            background: #e52521;
+            right: 40px;
+            bottom: 70px;
+            z-index: -1;
+
+            box-shadow:
+                25px 0 #e52521,
+                50px 0 #e52521,
+
+                -25px 25px #e52521,
+                0 25px #fff,
+                25px 25px #e52521,
+                50px 25px #fff,
+                75px 25px #e52521,
+
+                0 50px #fff,
+                25px 50px #fff,
+                50px 50px #fff,
+
+                25px 75px #f7c928;
+        }
+        .wrap {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+        h1 {
+            background: #e52521;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border: 4px solid #222;
+            box-shadow: 6px 6px 0 #222;
+        }
+        h2 {
+            color: #e52521;
+        }
+        section {
+            background: #fff8dc;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 4px solid #222;
+            box-shadow: 6px 6px 0 #222;
+        }
+        .card {
+            background: #fff;
+            border: 4px solid #222;
+            padding: 20px;
+            text-align: center;
+        }
+        .avatar {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
+            border: 5px solid #e52521;
+            background: #74c365;
+            overflow: hidden;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .skill {
+            display: inline-block;
+            background: #ffd93d;
+            padding: 8px 12px;
+            margin: 5px;
+            border: 3px solid #222;
+            font-weight: bold;
+        }
+        button {
+            background: #e52521;
+            color: white;
+            border: 3px solid #222;
+            padding: 10px 15px;
+            margin: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 #222;
+        }
+        button:hover {
+            background: #74c365;
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #222;
+        }
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 12px;
+            border: 3px solid #222;
+            font-family: inherit;
+        }
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #e52521;
+            background: #fff8dc;
+        }
+        .cart-item {
+            background: #74c365;
+            padding: 12px;
+            margin: 10px 0;
+            border: 3px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #cartTotal {
+            background: #ffd93d;
+            border: 4px solid #222;
+            padding: 15px;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .modal-content {
+            background: #fff8dc;
+            width: 90%;
+            max-width: 500px;
+            margin: 80px auto;
+            padding: 25px;
+            border: 5px solid #222;
+            box-shadow: 8px 8px 0 #222;
+        }
+        .modal-close {
+            float: right;
+            background: #e52521;
+            color: white;
+            border: 3px solid #222;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .history-item {
+            background: #6ec6ff;
+            border: 3px solid #222;
+            padding: 10px;
+            margin: 8px 0;
+        }
+        .err {
+            display: none;
+            color: #e52521;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .ok {
+            display: none;
+            color: #74c365;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        @media (max-width: 600px) {
+            .wrap {
+                width: 92%;
+            }
+            .cart-item {
+                display: block;
+            }
+            button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrap">
+    <section>
+        <div class="card" id="profileCard">
+            <div class="avatar">
+                <img src="fotoaku.jpg" alt="Foto Gendis Setyawan Putri">
+            </div>
+            <div>
+                <h3 id="profileName" style="margin:0">
+                    Gendis Setyawan Putri
+                </h3>
+                <div>
+                    Information System Student
+                </div>
+                <div id="skills">
+                    <span class="skill">HTML5</span>
+                    <span class="skill">CSS3</span>
+                    <span class="skill">JavaScript</span>
+                    <span class="skill">jQuery</span>
+                </div>
+            </div>
+        </div>
+
+        <button id="btnGantiNama">
+            Ganti Nama
+        </button>
+
+        <button id="btnSkill">
+            Tambah Skill
+        </button>
+
+        <button id="btnAnimasi">
+            Efek Fade & Slide
+        </button>
+
+        <button id="btnReset">
+            Reset
+        </button>
+
+    </section>
+
+    <section>
+        <form id="contactForm" novalidate>
+            <label for="nama">
+                Nama Lengkap
+            </label>
+            <input id="nama" type="text">
+
+            <div class="err" id="errNama">
+                Nama minimal 3 karakter
+            </div>
+
+            <label for="email">
+                Email
+            </label>
+
+            <input id="email" type="text">
+
+            <div class="err" id="errEmail">
+                Email tidak valid
+            </div>
+
+            <label for="pesan">
+                Pesan
+            </label>
+
+            <textarea id="pesan" rows="3"></textarea>
+
+            <div class="err" id="errPesan">
+                Pesan minimal 10 karakter
+            </div>
+
+            <button type="submit">
+                Kirim Pesan
+            </button>
+
+            <button type="button" id="btnResetForm">
+                Reset
+            </button>
+
+            <div class="ok" id="successMessage">
+                Pesan berhasil dikirim!
+            </div>
+        </form>
+    </section>
+
+    <section>
+
+        <div class="card" id="caseCard">
+
+            <div class="avatar">
+                <img src="fotoaku.jpg" alt="Foto Gendis Setyawan Putri">
+            </div>
+
+            <div>
+
+                <h3 id="caseName" style="margin:0">
+                    Gendis Setyawan Putri
+                </h3>
+
+                <div id="caseRole">
+                    Information System Student
+                </div>
+
+                <div>
+                    📍 Pontianak, Indonesia
+                </div>
+
+                <div>
+                    ✉️ gendistudio@gmail.com
+                </div>
+
+            </div>
+
+        </div>
+
+        <button id="btnUbah">
+            Ubah Profil
+        </button>
+
+        <button id="btnPesan">
+            Tinggalkan Pesan
+        </button>
+
+        <div id="msgBox" style="display:none;margin-top:12px">
+
+            <input
+                id="cNama"
+                type="text"
+                placeholder="Nama Anda"
+            >
+
+            <input
+                id="cEmail"
+                type="text"
+                placeholder="Email Anda"
+            >
+
+            <div class="err" id="errCase">
+                Nama dan email harus diisi dengan benar
+            </div>
+
+            <button id="btnKirim">
+                Kirim
+            </button>
+
+            <div class="ok" id="caseOk">
+                ✅ Terima kasih, pesan terkirim!
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>🍄 Shopping Cart 🍄</h2>
+
+        <div id="cartList"></div>
+
+        <div id="cartTotal">
+            Rp 0
+        </div>
+
+        <button id="btnCheckout">
+            Checkout
+        </button>
+
+        <button id="btnRiwayat">
+            Lihat Riwayat
+        </button>
+
+        <div id="historyBox" style="display:none;margin-top:15px">
+
+            <h3>Riwayat Checkout</h3>
+
+            <div id="historyList"></div>
+        </div>
+    </section>
+
+    <div id="buyerModal" class="modal">
+
+        <div class="modal-content">
+
+            <button
+                type="button"
+                id="btnCloseModal"
+                class="modal-close"
+            >
+                X
+            </button>
+
+            <h2>Data Pembeli</h2>
+
+            <label for="buyerName">
+                Nama
+            </label>
+
+            <input id="buyerName" type="text">
+
+            <div class="err" id="errBuyerName">
+                Nama harus diisi minimal 3 karakter
+            </div>
+
+            <label for="buyerAddress">
+                Alamat
+            </label>
+
+            <textarea id="buyerAddress" rows="3"></textarea>
+
+            <div class="err" id="errBuyerAddress">
+                Alamat harus diisi
+            </div>
+
+            <label for="buyerPhone">
+                No HP
+            </label>
+
+            <input id="buyerPhone" type="text">
+
+            <div class="err" id="errBuyerPhone">
+                No HP harus diisi dengan benar
+            </div>
+
+            <button
+                type="button"
+                id="btnSimpanPembeli"
+            >
+                Lanjut Checkout
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+$(function () {
+    const skillBaru = [
+        'Bootstrap',
+        'PHP',
+        'MySQL',
+        'Git',
+        'React'
+    ];
+
+    let idxSkill = 0;
+
+    $('#btnGantiNama').click(function () {
+
+        $('#profileName')
+            .text('Gendis Setyawan Putri')
+            .css('color', '#d94f8a');
+
+    });
+
+    $('#btnSkill').click(function () {
+
+        if (idxSkill < skillBaru.length) {
+
+            $('<span class="skill"></span>')
+                .text(skillBaru[idxSkill++])
+                .hide()
+                .appendTo('#skills')
+                .fadeIn(300);
+
+        } else {
+
+            alert('Semua skill sudah ditambahkan!');
+
+        }
+
+    });
+
+    $('#btnAnimasi').click(function () {
+
+        $('#profileCard')
+            .stop(true, true)
+            .fadeOut(300)
+            .fadeIn(600)
+            .slideUp(200)
+            .slideDown(300);
+
+    });
+
+    $('#btnReset').click(function () {
+
+        $('#profileName')
+            .text('Gendis Setyawan Putri')
+            .css('color', '');
+
+        $('#skills .skill').slice(4).remove();
+
+        idxSkill = 0;
+
+    });
+
+    $('.card').hover(
+
+        function () {
+            $(this).css('background', '#ffd9e8');
+        },
+
+        function () {
+            $(this).css('background', '#fff');
+        }
+
+    );
+
+    const emailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function cek(input, err, kondisi) {
+
+        if (kondisi) {
+
+            err.hide();
+            input.removeClass('invalid');
+
+            return true;
+        }
+        err.show();
+        input.addClass('invalid');
+
+        return false;
+    }
+
+    const vNama = () =>
+        cek(
+            $('#nama'),
+            $('#errNama'),
+            $('#nama').val().trim().length >= 3
+        );
+
+    const vEmail = () =>
+        cek(
+            $('#email'),
+            $('#errEmail'),
+            emailRegex.test(
+                $('#email').val().trim()
+            )
+        );
+
+    const vPesan = () =>
+        cek(
+            $('#pesan'),
+            $('#errPesan'),
+            $('#pesan').val().trim().length >= 10
+        );
+
+    $('#nama').on('input', vNama);
+    $('#email').on('input', vEmail);
+    $('#pesan').on('input', vPesan);
+
+    $('#contactForm').submit(function (e) {
+
+        e.preventDefault();
+
+        const valid = [
+            vNama(),
+            vEmail(),
+            vPesan()
+        ].every(Boolean);
+
+        if (valid) {
+
+            $('#successMessage')
+                .stop(true, true)
+                .fadeIn()
+                .delay(2000)
+                .fadeOut();
+
+            this.reset();
+        }
+    });
+
+    $('#btnResetForm').click(function () {
+        $('#contactForm')[0].reset();
+        $('.err').hide();
+        $('#contactForm .invalid')
+            .removeClass('invalid');
+    });
+
+    $('#btnUbah').click(function () {
+
+        $('#caseName')
+            .text('Gendis Setyawan Putri')
+            .css('color', '#d94f8a');
+
+        $('#caseRole')
+            .html(
+                '<strong>Information System Student</strong>'
+            );
+    });
+
+    $('#btnPesan').click(function () {
+
+        $('#msgBox').slideToggle(300);
+
+    });
+
+    $('#btnKirim').click(function () {
+
+        const ok =
+            $('#cNama').val().trim().length >= 3 &&
+            emailRegex.test(
+                $('#cEmail').val().trim()
+            );
+
+        if (ok) {
+
+            $('#errCase').hide();
+
+            $('#caseOk')
+                .stop(true, true)
+                .fadeIn()
+                .delay(2000)
+                .fadeOut();
+
+            $('#cNama, #cEmail').val('');
+
+        } else {
+
+            $('#errCase').show();
+        }
+    });
+
+    let cart = [
+        {
+            nama: 'Moisturaizer Skin1004',
+            harga: 260000,
+            qty: 1
+        },
+
+        {
+            nama: 'Lip Tint Facetology',
+            harga: 50000,
+            qty: 1
+        }
+
+    ];
+
+    function updateCartUI() {
+        $('#cartList').html('');
+        cart.forEach(function (item, index) {
+            $('#cartList').append(`
+                <div class="cart-item">
+                    <div>
+                        <strong>${item.nama}</strong>
+                        <br>
+                        Rp ${item.harga.toLocaleString('id-ID')}
+                        x ${item.qty}
+                    </div>
+                    <div>
+                        <button
+                            class="btnKurang"
+                            data-index="${index}"
+                        >
+                            -
+                        </button>
+
+                        <button
+                            class="btnTambah"
+                            data-index="${index}"
+                        >
+                            +
+                        </button>
+                    </div>
+                </div>
+            `);
+        });
+
+        let totalHarga = cart.reduce(
+            (sum, item) => sum + (item.harga * item.qty),
+            0
+        );
+
+        if (totalHarga > 100000) {
+            const diskon = totalHarga * 0.1;
+            totalHarga -= diskon;
+
+            $('#cartTotal').html(`
+                <del>
+                    Rp ${(totalHarga + diskon)
+                        .toLocaleString('id-ID')}
+                </del>
+                <br>
+                Diskon 10%
+                <br>
+                Rp ${totalHarga.toLocaleString('id-ID')}
+
+            `);
+
+        } else {
+
+            $('#cartTotal').html(`
+
+                Rp ${totalHarga.toLocaleString('id-ID')}
+
+            `);
+        }
+    }
+
+    $(document).on('click', '.btnTambah', function () {
+
+        const index = $(this).data('index');
+
+        cart[index].qty++;
+
+        updateCartUI();
+
+    });
+
+    $(document).on('click', '.btnKurang', function () {
+
+        const index = $(this).data('index');
+
+        if (cart[index].qty > 1) {
+
+            cart[index].qty--;
+        }
+
+        updateCartUI();
+    });
+
+    function simpanRiwayat(total, qty) {
+
+        const riwayat =
+            JSON.parse(
+                localStorage.getItem('riwayat')
+            ) || [];
+
+
+        riwayat.push({
+
+            tanggal: new Date().toISOString(),
+
+            total: total,
+
+            qty: qty
+
+        });
+
+
+        localStorage.setItem(
+            'riwayat',
+            JSON.stringify(riwayat)
+        );
+
+    }
+
+    $('#btnCheckout').click(function () {
+
+        if (cart.length === 0) {
+
+            alert('Keranjang masih kosong!');
+
+            return;
+        }
+
+        $('#buyerModal').fadeIn(300);
+
+    });
+
+    $('#btnCloseModal').click(function () {
+
+        $('#buyerModal').fadeOut(300);
+
+    });
+
+    $('#btnSimpanPembeli').click(function () {
+
+        const nama =
+            $('#buyerName').val().trim();
+
+        const alamat =
+            $('#buyerAddress').val().trim();
+
+        const noHP =
+            $('#buyerPhone').val().trim();
+
+
+        let valid = true;
+
+        if (nama.length < 3) {
+
+            $('#errBuyerName').show();
+
+            valid = false;
+
+        } else {
+
+            $('#errBuyerName').hide();
+        }
+
+        if (alamat.length < 3) {
+
+            $('#errBuyerAddress').show();
+
+            valid = false;
+
+        } else {
+
+            $('#errBuyerAddress').hide();
+
+        }
+
+        if (!/^[0-9]{10,13}$/.test(noHP)) {
+
+            $('#errBuyerPhone').show();
+
+            valid = false;
+
+        } else {
+
+            $('#errBuyerPhone').hide();
+
+        }
+
+        if (valid) {
+
+            let totalHarga = cart.reduce(
+                (sum, item) => sum + (item.harga * item.qty),
+                0
+            );
+
+            if (totalHarga > 100000) {
+
+                totalHarga -= totalHarga * 0.1;
+            }
+
+            const totalQty = cart.reduce(
+                (sum, item) => sum + item.qty,
+                0
+            );
+
+            simpanRiwayat(totalHarga, totalQty);
+
+            alert(
+                'Checkout berhasil! Terima kasih, ' + nama
+            );
+
+            $('#buyerModal').fadeOut(300);
+            $('#buyerName').val('');
+            $('#buyerAddress').val('');
+            $('#buyerPhone').val('');
+            cart = [];
+            updateCartUI();
+        }
+    });
+
+    $('#btnRiwayat').click(function () {
+
+        const riwayat =
+            JSON.parse(
+                localStorage.getItem('riwayat')
+            ) || [];
+        $('#historyList').html('');
+        if (riwayat.length === 0) {
+
+            $('#historyList').html(
+                '<p>Belum ada riwayat checkout.</p>'
+            );
+
+        } else {
+
+            riwayat.forEach(function (item) {
+
+                $('#historyList').append(`
+
+                    <div class="history-item">
+
+                        Tanggal:
+                        ${new Date(item.tanggal)
+                            .toLocaleString('id-ID')}
+
+                        <br>
+
+                        Jumlah barang:
+                        ${item.qty}
+
+                        <br>
+
+                        Total:
+                        Rp ${item.total
+                            .toLocaleString('id-ID')}
+                    </div>
+                `);
+            });
+        }
+
+        $('#historyBox').slideToggle(300);
+
+    });
+
+    updateCartUI();
+
+});
+</script>
+</body>
+</html>

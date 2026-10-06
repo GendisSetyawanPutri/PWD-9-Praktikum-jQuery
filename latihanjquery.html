@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario Shop</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #6ec6ff;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 40px auto;
+        }
+        h1 {
+            background: #e52521;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border: 4px solid #222;
+            border-radius: 8px;
+            box-shadow: 5px 5px 0 #222;
+        }
+        h2 {
+            color: #e52521;
+        }
+        .card {
+            background: #fff8dc;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 4px solid #222;
+            border-radius: 8px;
+            box-shadow: 5px 5px 0 #222;
+        }
+        .cart-item {
+            background: #74c365;
+            padding: 15px;
+            margin: 12px 0;
+            border: 3px solid #222;
+            border-radius: 8px;
+        }
+        .cart-item strong {
+            color: #222;
+        }
+        button {
+            background: #e52521;
+            color: white;
+            border: 3px solid #222;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 #222;
+        }
+        button:hover {
+            background: #f7c928;
+            color: #222;
+        }
+        #cartTotal {
+            background: #f7c928;
+            padding: 15px;
+            margin-top: 15px;
+            border: 3px solid #222;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 12px;
+            border: 3px solid #222;
+            border-radius: 6px;
+            font-family: Arial, sans-serif;
+        }
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #e52521;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .modal-content {
+            background: #fff8dc;
+            width: 90%;
+            max-width: 450px;
+            margin: 80px auto;
+            padding: 25px;
+            border: 4px solid #222;
+            border-radius: 8px;
+            box-shadow: 6px 6px 0 #222;
+        }
+        #btnCloseModal {
+            float: right;
+            background: #e52521;
+            padding: 6px 10px;
+        }
+        .error {
+            color: #e52521;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        #historyBox {
+            margin-top: 20px;
+        }
+        .history-item {
+            background: #6ec6ff;
+            padding: 12px;
+            margin: 10px 0;
+            border: 3px solid #222;
+            border-radius: 6px;
+        }
+        @media (max-width: 600px) {
+
+            .container {
+                width: 92%;
+                margin: 25px auto;
+            }
+            button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🍄 Gendis Beauty Shop 🍄</h1>
+
+    <div class="card">
+
+        <h2>🛒 Shopping Cart</h2>
+
+        <div id="cartList"></div>
+
+        <div id="cartTotal">
+            Rp 0
+        </div>
+
+        <br>
+
+        <button id="btnCheckout">
+            Checkout
+        </button>
+
+        <button id="btnRiwayat">
+            Lihat Riwayat
+        </button>
+
+        <div id="historyBox"></div>
+
+    </div>
+
+</div>
+
+<div id="buyerModal" class="modal">
+
+    <div class="modal-content">
+
+        <button id="btnCloseModal">
+            X
+        </button>
+
+        <h2>🍄 Data Pembeli</h2>
+
+        <label>Nama</label>
+
+        <input type="text" id="buyerName">
+
+        <div id="errorName" class="error"></div>
+
+
+        <label>Alamat</label>
+
+        <textarea id="buyerAddress"></textarea>
+
+        <div id="errorAddress" class="error"></div>
+
+
+        <label>No HP</label>
+
+        <input type="text" id="buyerPhone">
+
+        <div id="errorPhone" class="error"></div>
+
+        <button id="btnSimpanPembeli">
+            Simpan
+        </button>
+    </div>
+</div>
+
+<script>
+    let cart = [
+        {
+            nama: "Moisturizer Skin1004",
+            harga: 260000,
+            qty: 1
+        },
+        {
+            nama: "Lip Tint Facetology",
+            harga: 50000,
+            qty: 1
+        }
+    ];
+    // LATIHAN 1
+    // DISKON 10% JIKA TOTAL > Rp100.000
+
+    function updateCartUI() {
+        $('#cartList').html('');
+        cart.forEach(function(item, index) {
+
+            $('#cartList').append(`
+
+                <div class="cart-item">
+
+                    <strong>
+                        🍄 ${item.nama}
+                    </strong>
+
+                    <br>
+
+                    Rp ${item.harga.toLocaleString('id-ID')}
+                    x ${item.qty}
+
+                    <br>
+
+                    <button
+                        class="btnKurang"
+                        data-index="${index}">
+                        -
+                    </button>
+
+                    <button
+                        class="btnTambah"
+                        data-index="${index}">
+                        +
+                    </button>
+
+                </div>
+
+            `);
+
+        });
+
+        let totalHarga = cart.reduce(
+            (sum, item) =>
+                sum + (item.harga * item.qty),
+            0
+        );
+
+        if (totalHarga > 100000) {
+
+            const diskon = totalHarga * 0.1;
+
+            totalHarga -= diskon;
+
+            $('#cartTotal').html(`
+
+                <del>
+                    Rp ${(totalHarga + diskon).toLocaleString('id-ID')}
+                </del>
+
+                <br>
+
+                🎁 Diskon 10%
+
+                <br>
+
+                Rp ${totalHarga.toLocaleString('id-ID')}
+
+            `);
+
+        } else {
+
+            $('#cartTotal').html(
+                `Rp ${totalHarga.toLocaleString('id-ID')}`
+            );
+
+        }
+
+    }
+
+    $(document).on('click', '.btnTambah', function() {
+
+        const index = $(this).data('index');
+
+        cart[index].qty++;
+
+        updateCartUI();
+
+    });
+
+    $(document).on('click', '.btnKurang', function() {
+
+        const index = $(this).data('index');
+
+        if (cart[index].qty > 1) {
+
+            cart[index].qty--;
+
+        }
+
+        updateCartUI();
+
+    });
+
+    // LATIHAN 2
+    // SIMPAN RIWAYAT KE LOCAL STORAGE
+
+    function simpanRiwayat(total, qty) {
+
+        const riwayat =
+            JSON.parse(localStorage.getItem('riwayat')) || [];
+
+
+        riwayat.push({
+
+            tanggal: new Date().toISOString(),
+
+            total: total,
+
+            qty: qty
+
+        });
+
+        localStorage.setItem(
+            'riwayat',
+            JSON.stringify(riwayat)
+        );
+    }
+
+    // LATIHAN 3
+    // FORM DATA PEMBELI DENGAN VALIDASI
+
+    // Membuka modal sebelum checkout
+    $('#btnCheckout').click(function() {
+
+        $('#buyerModal').fadeIn(300);
+
+    });
+    // Menutup modal
+    $('#btnCloseModal').click(function() {
+
+        $('#buyerModal').fadeOut(300);
+
+    });
+    // Validasi form pembeli
+    $('#btnSimpanPembeli').click(function() {
+
+        const nama =
+            $('#buyerName').val().trim();
+
+        const alamat =
+            $('#buyerAddress').val().trim();
+
+        const noHP =
+            $('#buyerPhone').val().trim();
+
+
+        let valid = true;
+
+        // Menghapus pesan error sebelumnya
+        $('#errorName').text('');
+        $('#errorAddress').text('');
+        $('#errorPhone').text('');
+
+        // Validasi nama
+        if (nama.length < 3) {
+
+            $('#errorName').text(
+                'Nama minimal 3 karakter'
+            );
+
+            valid = false;
+
+        }
+
+        // Validasi alamat
+        if (alamat.length < 3) {
+
+            $('#errorAddress').text(
+                'Alamat harus diisi'
+            );
+
+            valid = false;
+
+        }
+        // Validasi nomor HP
+        if (!/^[0-9]{10,13}$/.test(noHP)) {
+
+            $('#errorPhone').text(
+                'No HP harus 10-13 angka'
+            );
+
+            valid = false;
+
+        }
+        // Jika semua data benar
+        if (valid) {
+
+            let totalHarga = cart.reduce(
+                (sum, item) =>
+                    sum + (item.harga * item.qty),
+                0
+            );
+            // Menghitung diskon
+            if (totalHarga > 100000) {
+
+                totalHarga -= totalHarga * 0.1;
+
+            }
+            // Menghitung jumlah barang
+            const totalQty = cart.reduce(
+                (sum, item) =>
+                    sum + item.qty,
+                0
+            );
+
+            // Menyimpan riwayat transaksi
+            simpanRiwayat(
+                totalHarga,
+                totalQty
+            );
+            alert(
+                '🎉 Checkout berhasil! Terima kasih, ' + nama
+            );
+
+            // Menutup modal
+            $('#buyerModal').fadeOut(300);
+            // Mengosongkan form
+            $('#buyerName').val('');
+            $('#buyerAddress').val('');
+            $('#buyerPhone').val('');
+
+
+            // Mengosongkan cart
+            cart = [];
+
+            updateCartUI();
+
+        }
+
+    });
+    // MENAMPILKAN RIWAYAT
+
+    $('#btnRiwayat').click(function() {
+
+        const riwayat =
+            JSON.parse(localStorage.getItem('riwayat')) || [];
+
+        $('#historyBox').html('');
+
+        if (riwayat.length === 0) {
+
+            $('#historyBox').html(
+                '<p>Belum ada riwayat transaksi.</p>'
+            );
+
+            return;
+        }
+        riwayat.forEach(function(item) {
+
+            $('#historyBox').append(`
+
+                <div class="history-item">
+
+                    🍄 Tanggal:
+                    ${new Date(item.tanggal).toLocaleString('id-ID')}
+
+                    <br>
+
+                    Jumlah:
+                    ${item.qty} barang
+
+                    <br>
+
+                    Total:
+                    Rp ${item.total.toLocaleString('id-ID')}
+
+                </div>
+            `);
+        });
+    });
+
+    // Menampilkan cart saat halaman dibuka
+    updateCartUI();
+
+</script>
+</body>
+</html>
