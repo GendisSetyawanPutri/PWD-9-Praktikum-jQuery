@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glowé Skincare</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- jQuery Validation Plugin -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
+
+    <!-- JavaScript sendiri -->
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#home" class="logo">
+                <i class="fa-solid fa-spa"></i> Glowé
+            </a>
+
+            <nav class="nav-menu">
+                <a href="#home">Home</a>
+                <a href="#produk">Produk</a>
+                <a href="#informasi">Informasi</a>
+
+                <button id="cartBtn" class="cart-btn" type="button">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span id="cartCount">0</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero" id="home">
+            <div class="container hero-container">
+                <div class="hero-text">
+                    <p class="eyebrow">YOUR DAILY SKINCARE ROUTINE</p>
+                    <h1>Rawat Kulitmu,<br><span>Temukan Glow-mu.</span></h1>
+                    <p>
+                        Temukan pilihan skincare untuk menemani rutinitas
+                        perawatan kulitmu setiap hari bersama Glowé.
+                    </p>
+                    <a href="#produk" class="primary-btn">
+                        Lihat Produk <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="hero-art" id="heroArt">
+                    <div class="hero-circle">
+                        <i class="fa-solid fa-spa"></i>
+                    </div>
+                    <span class="sparkle sparkle-one">✦</span>
+                    <span class="sparkle sparkle-two">✧</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUK -->
+        <section class="section" id="produk">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">PILIHAN UNTUKMU</p>
+                    <h2>Produk Skincare</h2>
+                    <p>Temukan produk untuk rutinitas perawatanmu.</p>
+                </div>
+
+                <!-- FILTER KATEGORI -->
+                <div class="product-tools">
+                    <div class="filter-list">
+                        <button class="filter-btn active" data-category="semua" type="button">Semua</button>
+                        <button class="filter-btn" data-category="cleanser" type="button">Cleanser</button>
+                        <button class="filter-btn" data-category="serum" type="button">Serum</button>
+                        <button class="filter-btn" data-category="moisturizer" type="button">Moisturizer</button>
+                        <button class="filter-btn" data-category="sunscreen" type="button">Sunscreen</button>
+                    </div>
+
+                    <label class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="search" id="searchInput" placeholder="Cari produk...">
+                    </label>
+                </div>
+
+                <div class="product-grid" id="productGrid"></div>
+            </div>
+        </section>
+
+        <!-- NAVIGASI TAB -->
+        <section class="section information-section" id="informasi">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">KENALI GLOWÉ</p>
+                    <h2>Informasi untukmu</h2>
+                    <p>Pilih tab untuk melihat informasi yang berbeda.</p>
+                </div>
+
+                <div class="tab-container">
+                    <div class="tab-buttons" role="tablist">
+                        <button class="tab-btn active" data-tab="about"
+                            role="tab" aria-selected="true" type="button">
+                            Tentang Kami
+                        </button>
+
+                        <button class="tab-btn" data-tab="shopping"
+                            role="tab" aria-selected="false" type="button">
+                            Cara Belanja
+                        </button>
+
+                        <button class="tab-btn" data-tab="policy"
+                            role="tab" aria-selected="false" type="button">
+                            Informasi Pembelian
+                        </button>
+                    </div>
+
+                    <div class="tab-panel" id="panel-about" role="tabpanel">
+                        <h3>Tentang Glowé</h3>
+                        <p>
+                            Glowé merupakan landing page toko skincare yang
+                            menyediakan informasi produk, pencarian produk,
+                            filter kategori, dan simulasi keranjang belanja.
+                        </p>
+                    </div>
+
+                    <div class="tab-panel" id="panel-shopping" role="tabpanel" hidden>
+                        <h3>Cara Belanja</h3>
+                        <ol>
+                            <li>Pilih produk yang diinginkan.</li>
+                            <li>Tekan tombol Tambah ke Keranjang.</li>
+                            <li>Periksa produk dan total belanja.</li>
+                            <li>Tekan checkout dan isi formulir pembelian.</li>
+                        </ol>
+                    </div>
+
+                    <div class="tab-panel" id="panel-policy" role="tabpanel" hidden>
+                        <h3>Informasi Pembelian</h3>
+                        <p>
+                            Formulir pembelian digunakan untuk simulasi checkout.
+                            Data riwayat disimpan di browser dan tidak terhubung
+                            dengan pembayaran atau pengiriman sungguhan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <a href="#home" class="logo">
+                <i class="fa-solid fa-spa"></i> Glowé
+            </a>
+            <p>Temukan rutinitas skincare yang cocok untukmu.</p>
+            <small>&copy; 2026 Glowé Skincare</small>
+        </div>
+    </footer>
+
+    <!-- OVERLAY KERANJANG -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- KERANJANG -->
+    <aside class="cart-sidebar" id="cartPanel" aria-hidden="true">
+        <div class="cart-header">
+            <h2><i class="fa-solid fa-bag-shopping"></i> Keranjang</h2>
+            <button class="icon-btn" id="closeCart" type="button" aria-label="Tutup keranjang">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="cart-items" id="cartItems">
+            <p class="empty-message">Keranjang masih kosong.</p>
+        </div>
+
+        <div class="cart-summary">
+            <div class="summary-line">
+                <span>Jumlah item</span><strong id="cartQty">0</strong>
+            </div>
+            <div class="summary-line">
+                <span>Subtotal</span><strong id="cartSubtotal">Rp 0</strong>
+            </div>
+            <div class="summary-line discount-line">
+                <span>Diskon</span><strong id="cartDiscount">Rp 0</strong>
+            </div>
+            <div class="summary-line total-line">
+                <span>Total</span><strong id="cartTotal">Rp 0</strong>
+            </div>
+
+            <p class="discount-note">
+                Diskon 10% untuk subtotal di atas Rp100.000.
+            </p>
+
+            <button class="primary-btn full-btn" id="checkoutBtn" type="button">
+                Lanjut Checkout
+            </button>
+        </div>
+    </aside>
+
+    <!-- FORM PEMBELIAN -->
+    <div class="modal-overlay" id="buyerModal" aria-hidden="true">
+        <section class="buyer-modal" role="dialog" aria-modal="true">
+            <div class="modal-header">
+                <div>
+                    <p class="eyebrow">SELANGKAH LAGI</p>
+                    <h2>Formulir Pembelian</h2>
+                </div>
+
+                <button class="icon-btn" id="closeBuyerModal" type="button" aria-label="Tutup formulir">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <p class="modal-description">
+                Lengkapi data berikut untuk melanjutkan simulasi checkout.
+            </p>
+
+            <form id="buyerForm" novalidate>
+                <div class="form-group">
+                    <label for="buyerName">Nama Lengkap</label>
+                    <input type="text" id="buyerName" name="buyerName"
+                        placeholder="Masukkan nama lengkap">
+                </div>
+
+                <div class="form-group">
+                    <label for="buyerEmail">Email</label>
+                    <input type="email" id="buyerEmail" name="buyerEmail"
+                        placeholder="nama@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="buyerPhone">Nomor HP</label>
+                    <input type="text" id="buyerPhone" name="buyerPhone"
+                        placeholder="Contoh: 081234567890">
+                </div>
+
+                <div class="form-group">
+                    <label for="buyerAddress">Alamat Lengkap</label>
+                    <textarea id="buyerAddress" name="buyerAddress" rows="3"
+                        placeholder="Masukkan alamat lengkap"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="buyerCity">Kota/Kabupaten</label>
+                    <input type="text" id="buyerCity" name="buyerCity"
+                        placeholder="Masukkan kota/kabupaten">
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentMethod">Metode Pembayaran</label>
+                    <select id="paymentMethod" name="paymentMethod">
+                        <option value="">Pilih metode pembayaran</option>
+                        <option value="Transfer Bank">Transfer Bank</option>
+                        <option value="E-Wallet">E-Wallet</option>
+                        <option value="COD">COD (simulasi)</option>
+                    </select>
+                </div>
+
+                <button class="primary-btn full-btn" type="submit">
+                    Konfirmasi Pembelian
+                </button>
+            </form>
+        </section>
+    </div>
+
+    <!-- NOTIFIKASI -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+</body>
+</html>
