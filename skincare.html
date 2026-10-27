@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Glowé Skincare</title>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+    <nav class="navbar">
+        <div class="container nav-container">
+
+            <div class="logo">
+                <i class="fa-solid fa-spa"></i>
+                Glowé Skincare
+            </div>
+
+            <div class="nav-menu">
+                <a href="#home">Home</a>
+                <a href="#produk">Produk</a>
+                <a href="#tentang">Tentang</a>
+
+                <button id="cartBtn" class="cart-btn">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cartCount">0</span>
+                </button>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+    <section id="home" class="hero">
+
+        <div class="container hero-container">
+
+            <div class="hero-text">
+
+                <p class="hero-small">
+                    Glowé Skincare
+                </p>
+
+                <h1>
+                    Rawat Kulitmu,
+                    <span>Mulai dari Sekarang</span>
+                </h1>
+
+                <p>
+                    Temukan produk skincare yang sesuai untuk membantu
+                    merawat kulitmu setiap hari.
+                </p>
+
+                <a href="#produk" class="hero-btn">
+                    Lihat Produk
+                </a>
+
+            </div>
+
+            <div class="hero-icon">
+                <i class="fa-solid fa-face-smile"></i>
+            </div>
+
+        </div>
+
+    </section>
+    <!-- =========================
+         PRODUK
+    ========================== -->
+    <section id="produk" class="produk-section">
+
+        <div class="container">
+
+            <div class="section-title">
+                <p>Glowé Skincare</p>
+                <h2>Pilih Produk Favoritmu</h2>
+            </div>
+
+            <!-- KATEGORI -->
+            <div class="kategori">
+
+                <button class="filter-btn active" data-category="all">
+                    Semua
+                </button>
+
+                <button class="filter-btn" data-category="cleanser">
+                    Cleanser
+                </button>
+
+                <button class="filter-btn" data-category="serum">
+                    Serum
+                </button>
+
+                <button class="filter-btn" data-category="moisturizer">
+                    Moisturizer
+                </button>
+
+                <button class="filter-btn" data-category="sunscreen">
+                    Sunscreen
+                </button>
+
+            </div>
+
+            <!-- SEARCH -->
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Cari produk skincare..."
+                >
+
+            </div>
+
+            <!-- PRODUCT GRID -->
+            <div id="productGrid" class="product-grid">
+
+                <!-- Produk ditampilkan melalui JavaScript -->
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         TENTANG
+    ========================== -->
+    <section id="tentang" class="tentang-section">
+
+        <div class="container">
+
+            <div class="section-title">
+                <p>Tentang Kami</p>
+                <h2>Glowé Skincare</h2>
+            </div>
+
+            <div class="tentang-content">
+
+                <p>
+                    Glowé Skincare menyediakan berbagai produk skincare
+                    untuk membantu memenuhi kebutuhan perawatan kulit
+                    sehari-hari.
+                </p>
+
+                <p>
+                    Kami menghadirkan pilihan cleanser, serum,
+                    moisturizer, dan sunscreen dengan harga yang
+                    terjangkau.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         CART SIDEBAR
+    ========================== -->
+    <div id="cartOverlay" class="cart-overlay"></div>
+
+    <aside id="cartSidebar" class="cart-sidebar">
+
+        <div class="cart-header">
+
+            <h3>
+                <i class="fa-solid fa-cart-shopping"></i>
+                Keranjang
+            </h3>
+
+            <button id="closeCart">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div id="cartItems" class="cart-items">
+
+            <p class="empty-cart">
+                Keranjang masih kosong
+            </p>
+
+        </div>
+
+
+        <div class="cart-footer">
+
+            <div class="cart-total">
+
+                <span>Total</span>
+
+                <strong id="cartTotal">
+                    Rp 0
+                </strong>
+
+            </div>
+
+            <button id="checkoutBtn" class="checkout-btn">
+                Checkout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         FORM PEMBELI
+    ========================== -->
+    <div id="buyerModal" class="buyer-modal">
+
+        <div class="buyer-modal-content">
+
+            <div class="buyer-modal-header">
+
+                <h3>Data Pembeli</h3>
+
+                <button id="closeBuyerModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <form id="buyerForm">
+
+                <div class="form-group">
+
+                    <label for="buyerName">
+                        Nama
+                    </label>
+
+                    <input
+                        type="text"
+                        id="buyerName"
+                        placeholder="Masukkan nama"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="buyerAddress">
+                        Alamat
+                    </label>
+
+                    <textarea
+                        id="buyerAddress"
+                        placeholder="Masukkan alamat"
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="buyerPhone">
+                        No HP
+                    </label>
+
+                    <input
+                        type="text"
+                        id="buyerPhone"
+                        placeholder="Masukkan nomor HP"
+                    >
+
+                </div>
+
+
+                <button type="submit" class="submit-btn">
+                    Konfirmasi Pesanan
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TOAST
+    ========================== -->
+    <div id="toast" class="toast">
+        Pesan
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+    <footer>
+
+        <div class="container">
+
+            <p>
+                &copy; 2026 Glowé Skincare
+            </p>
+
+            <p>
+                Rawat kulitmu, mulai dari sekarang.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
