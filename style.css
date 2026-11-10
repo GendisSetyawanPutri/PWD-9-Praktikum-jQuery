@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ===== 1. Warna =====
    Variabel CSS: ubah warna cukup di sini saja. */
 
@@ -130,4 +131,399 @@ body {
 .pesan-kosong {
    display: none;
    color: var(--teks-pudar);
+=======
+/* =================================
+   1. TEMA MARIO BROS
+================================= */
+
+:root {
+    --latar: #70d6ff;
+    --kartu: #fffdf0;
+    --teks: #263238;
+    --teks-pudar: #62717a;
+
+    --merah: #ed2939;
+    --merah-gelap: #bd1829;
+    --kuning: #ffcf33;
+    --hijau: #36b85a;
+    --biru: #168bd2;
+    --coklat: #a65e32;
+}
+
+body.gelap {
+    --latar: #172c50;
+    --kartu: #263c62;
+    --teks: #ffffff;
+    --teks-pudar: #c3d5ed;
+
+    --merah: #ff5866;
+    --merah-gelap: #d93649;
+    --kuning: #ffdb59;
+    --hijau: #55d47b;
+    --biru: #55b9f2;
+    --coklat: #b77a4d;
+}
+
+
+/* =================================
+   2. PENGATURAN UMUM
+================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    line-height: 1.6;
+
+    background: var(--latar);
+    color: var(--teks);
+
+    transition: background 0.3s, color 0.3s;
+
+    background-image:
+        radial-gradient(
+            circle at 10% 15%,
+            rgba(255,255,255,0.7) 0 3px,
+            transparent 4px
+        );
+}
+
+
+/* =================================
+   3. HEADER
+================================= */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 5%;
+
+    background: #ffffff;
+    border-bottom: 6px solid var(--kuning);
+
+    box-shadow: 0 5px 0 rgba(0,0,0,0.08);
+}
+
+body.gelap .header {
+    background: #263c62;
+}
+
+.logo {
+    margin: 0;
+
+    color: var(--merah);
+    font-size: 30px;
+    font-weight: 900;
+
+    text-shadow: 2px 2px 0 var(--kuning);
+}
+
+
+/* Tombol tema */
+
+#tombol-tema {
+    padding: 11px 22px;
+
+    background: var(--merah);
+    color: white;
+
+    border: none;
+    border-bottom: 5px solid var(--merah-gelap);
+    border-radius: 12px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#tombol-tema:hover {
+    transform: translateY(-3px);
+    background: var(--merah-gelap);
+}
+
+#tombol-tema:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+}
+
+
+/* =================================
+   4. ISI HALAMAN
+================================= */
+
+.isi {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 5% 70px;
+}
+
+
+/* =================================
+   5. PERKENALAN
+================================= */
+
+.perkenalan {
+    padding: 90px 0 55px;
+}
+
+.perkenalan h1 {
+    margin: 0 0 15px;
+
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+
+    color: #ffffff;
+
+    text-shadow:
+        3px 3px 0 var(--merah),
+        6px 6px 0 rgba(0,0,0,0.15);
+}
+
+.perkenalan p {
+    margin: 20px 0 0;
+
+    font-size: 1.35rem;
+    font-weight: bold;
+
+    color: #174d73;
+}
+
+body.gelap .perkenalan p {
+    color: #d6edff;
+}
+
+
+/* =================================
+   6. JUDUL PROYEK
+================================= */
+
+.proyek h2 {
+    display: inline-block;
+
+    margin-bottom: 22px;
+    padding: 8px 20px;
+
+    background: var(--kuning);
+    color: #49350a;
+
+    border: 3px solid #e4a900;
+    border-radius: 10px;
+
+    font-size: 1.8rem;
+
+    box-shadow: 0 5px 0 rgba(0,0,0,0.12);
+}
+
+
+/* =================================
+   7. KOLOM PENCARIAN
+================================= */
+
+#cari {
+    width: 100%;
+
+    padding: 17px 22px;
+    margin-bottom: 30px;
+
+    background: var(--kartu);
+    color: var(--teks);
+
+    border: 3px solid var(--biru);
+    border-radius: 14px;
+
+    font-size: 1.1rem;
+
+    outline: none;
+    transition: 0.3s;
+}
+
+#cari:focus {
+    border-color: var(--merah);
+
+    box-shadow:
+        0 0 0 5px rgba(237,41,57,0.15);
+}
+
+
+/* =================================
+   8. GRID PROYEK
+================================= */
+
+.daftar-proyek {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 25px;
+}
+
+
+/* =================================
+   9. KARTU PROYEK
+================================= */
+
+.kartu {
+    display: block;
+
+    min-height: 175px;
+    padding: 28px;
+
+    background: var(--kartu);
+
+    color: var(--teks);
+    text-decoration: none;
+
+    border: 3px solid #ffffff;
+    border-radius: 18px;
+
+    box-shadow:
+        0 7px 0 rgba(0,0,0,0.15),
+        0 12px 20px rgba(0,0,0,0.08);
+
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.kartu:nth-child(4n+1) {
+    border-top: 7px solid var(--merah);
+}
+
+.kartu:nth-child(4n+2) {
+    border-top: 7px solid var(--kuning);
+}
+
+.kartu:nth-child(4n+3) {
+    border-top: 7px solid var(--hijau);
+}
+
+.kartu:nth-child(4n+4) {
+    border-top: 7px solid var(--biru);
+}
+
+.kartu:hover {
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 12px 0 rgba(0,0,0,0.12),
+        0 18px 25px rgba(0,0,0,0.12);
+}
+
+.kartu h3 {
+    margin: 0 0 10px;
+
+    color: var(--merah);
+    font-size: 1.4rem;
+    font-weight: 900;
+}
+
+.kartu p {
+    margin: 0;
+
+    color: var(--teks-pudar);
+    font-size: 1.05rem;
+}
+
+
+/* =================================
+   10. PESAN KOSONG
+================================= */
+
+.pesan-kosong {
+    display: none;
+
+    padding: 20px;
+
+    background: var(--kartu);
+    border-left: 6px solid var(--merah);
+    border-radius: 10px;
+
+    color: var(--teks);
+}
+
+
+/* =================================
+   11. FOOTER
+================================= */
+
+.footer {
+    padding: 25px;
+
+    background: #ffffff;
+
+    border-top: 7px solid var(--kuning);
+
+    color: #52636b;
+    text-align: center;
+    font-weight: bold;
+}
+
+body.gelap .footer {
+    background: #263c62;
+    color: white;
+}
+
+
+/* =================================
+   12. TAMPILAN HP
+================================= */
+
+@media (max-width: 700px) {
+
+    .header {
+        padding: 15px 20px;
+    }
+
+    .isi {
+        padding: 0 20px 40px;
+    }
+
+    .perkenalan {
+        padding: 65px 0 40px;
+    }
+
+    .perkenalan h1 {
+        font-size: 2.5rem;
+    }
+
+    .perkenalan p {
+        font-size: 1.1rem;
+    }
+
+    .daftar-proyek {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .kartu {
+        min-height: 0;
+        padding: 23px;
+    }
+
+    .proyek h2 {
+        font-size: 1.5rem;
+    }
+}
+
+.navbar-back {
+    padding: 15px 25px;
+    background-color: #e52521;
+    border-bottom: 5px solid #b71c1c;
+}
+
+.navbar-back a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.navbar-back a:hover {
+    color: #ffdf00;
+>>>>>>> lama/main
 }

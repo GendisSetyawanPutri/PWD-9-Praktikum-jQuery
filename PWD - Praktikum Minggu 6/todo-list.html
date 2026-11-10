@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>To-Do List</title>
+<style>
+body{font-family:Arial;max-width:400px;margin:40px auto;}
+li{margin:8px 0;padding:8px;background:#f0f0f0;border-radius:5px;
+display:flex;justify-content:space-between;}
+button{cursor:pointer;}
+</style>
+</head>
+<body>
+<h2>📝 To-Do List</h2>
+<input type="text" id="input" placeholder="Tulis tugas...">
+<button id="tambah">Tambah</button>
+<ul id="list"></ul>
+
+<script>
+const input = document.getElementById("input");
+const btn = document.getElementById("tambah");
+const list = document.getElementById("list");
+
+btn.addEventListener("click", function() {
+const teks = input.value.trim();
+
+if (teks === "") { 
+    alert("Tugas tidak boleh kosong!"); 
+    return; 
+}
+
+const li = document.createElement("li");
+
+li.innerHTML = `<span>${teks}</span>
+<button class="hapus">❌</button>`;
+
+li.querySelector(".hapus").addEventListener("click", function() {
+li.remove();
+});
+
+list.appendChild(li);
+input.value = "";
+});
+
+// Tambah dengan tombol Enter
+input.addEventListener("keypress", function(e) {
+if (e.key === "Enter") btn.click();
+});
+</script>
+
+</body>
+</html>

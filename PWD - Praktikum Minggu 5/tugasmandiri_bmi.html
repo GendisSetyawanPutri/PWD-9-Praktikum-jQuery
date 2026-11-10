@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator BMI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+             background-image: url("mandiri.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .bmi {
+            background: #dbe586;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(254, 252, 252, 0.1);
+            text-align: center;
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #e6348a;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+            width: 80%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 16px;
+            background: #f7814a;
+            color: #ffeb94;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .hasil {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e6348a;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bmi">
+        <h2>⚖️ Kalkulator BMI</h2>
+        <input type="number" id="berat">
+        <input type="number" id="tinggi">
+        <br>
+
+        <button onclick="hitungBMI()">Hitung BMI</button>
+        <div class="hasil">
+            BMI: <span id="hasilBMI">0</span>
+            <br>
+
+            Status: <span id="statusBMI">-</span>
+        </div>
+    </div>
+    <script>
+        function hitungBMI() {
+            let berat = parseFloat(document.getElementById('berat').value);
+            let tinggi = parseFloat(document.getElementById('tinggi').value);
+
+            tinggi = tinggi / 100;
+
+            let bmi = berat / (tinggi * tinggi);
+
+            if (bmi < 18.5) {
+                document.getElementById('statusBMI').innerHTML = 'Kurus';
+            } else if (bmi <= 24.9) {
+                document.getElementById('statusBMI').innerHTML = 'Normal';
+            } else if (bmi <= 29.9) {
+                document.getElementById('statusBMI').innerHTML = 'Gemuk';
+            } else {
+                document.getElementById('statusBMI').innerHTML = 'Obesitas';
+            }
+            document.getElementById('hasilBMI').innerHTML = bmi;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Konversi Suhu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-image: url("suhu.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .konversi {
+            background: rgb(255, 255, 192);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            text-align: center; 
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #991e5a;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+            width: 80%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 16px;
+            background: #db1374;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .hasil {
+            font-size: 28px;
+            font-weight: bold;
+            color: #a0b101;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="konversi">
+        <h2>🌡️ Konversi Suhu</h2>
+
+        <input type="number" id="celcius" placeholder="Masukkan Suhu Celsius">
+        <br>
+
+        <button onclick="konversi()">Konversi</button>
+
+        <div class="hasil">
+            Fahrenheit: <span id="hasilFarenheit">0</span> °F
+            <br>
+            Kelvin: <span id="hasilKelvin">0</span> K
+        </div>
+    </div>
+    <script>
+        function konversi() {
+            let c = parseFloat(document.getElementById('celcius').value);
+            if (isNaN(c)) {
+                alert('Masukkan suhu dengan benar!');
+                return;
+            }
+            let f = (c * 9/5) + 32;
+            let k = c + 273.15;
+
+            document.getElementById('hasilFarenheit').innerHTML = f;
+            document.getElementById('hasilKelvin').innerHTML = k;
+        }
+    </script>
+</body>
+</html>

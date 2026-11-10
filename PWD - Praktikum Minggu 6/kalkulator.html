@@ -1,0 +1,56 @@
+html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kalkulator</title>
+<style>
+body{font-family:Arial;text-align:center;margin-top:50px;}
+input,select,button{padding:8px;margin:5px;font-size:1em;}
+#hasil{font-size:1.4em;font-weight:bold;color:#0070c0;margin-top:15px;}
+</style>
+</head>
+<body>
+<h2>🧮 Kalkulator Sederhana</h2>
+
+<input type="number" id="angka1" placeholder="Angka 1">
+
+<select id="operator">
+<option value="+">+</option>
+<option value="-">-</option>
+<option value="*">×</option>
+<option value="/">÷</option>
+</select>
+
+<input type="number" id="angka2" placeholder="Angka 2">
+
+<button id="hitung">Hitung</button>
+
+<div id="hasil"></div>
+
+<script>
+document.getElementById("hitung").addEventListener("click", function() {
+    const a = parseFloat(document.getElementById("angka1").value);
+    const b = parseFloat(document.getElementById("angka2").value);
+    const op = document.getElementById("operator").value;
+    let hasil;
+
+    if (isNaN(a) || isNaN(b)) {
+        document.getElementById("hasil").textContent = "Masukkan angka yang valid";
+        return;
+    }
+
+    switch(op) {
+        case "+": hasil = a + b; break;
+        case "-": hasil = a - b; break;
+        case "*": hasil = a * b; break;
+        case "/":
+            hasil = (b === 0) ? "Tidak bisa dibagi 0" : a / b;
+            break;
+    }
+
+    document.getElementById("hasil").textContent = "Hasil: " + hasil;
+});
+</script>
+
+</body>
+</html>

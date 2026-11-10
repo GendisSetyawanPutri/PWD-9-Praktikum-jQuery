@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cek Ganjil Genap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-image: url("ganjilgenap.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .cek {
+            background: #dbe586;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #991e5a;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+            width: 80%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 16px;
+            background: #db1374;
+            color: #dbe586;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .hasil {
+            font-size: 28px;
+            font-weight: bold;
+            color: #a1004e;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cek">
+        <h2>🔢 Cek Ganjil / Genap</h2>
+        <input type="number" id="angka" placeholder="Masukkan Angka">
+        <br>
+
+        <button onclick="cekAngka()">Cek</button>
+        <div class="hasil">
+            Hasil: <span id="hasilAngka">-</span>
+        </div>
+    </div>
+    <script>
+        function cekAngka() {
+            let angka = parseFloat(document.getElementById('angka').value);
+            if (angka % 2 === 0) {
+                document.getElementById('hasilAngka').innerHTML = 'Angka Genap';
+            } else {
+                document.getElementById('hasilAngka').innerHTML = 'Angka Ganjil';
+            }
+        }
+    </script>
+</body>
+</html>
